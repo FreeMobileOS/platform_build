@@ -294,10 +294,34 @@ function printconfig()
     get_build_var report_config
 }
 
+function find_sdk_ndk()
+{
+    if [ -z "$ANDROID_HOME" ]; then
+        [ -d /opt/android-sdk ] && ANDROID_HOME=/opt/android-sdk
+        [ -d /opt/android-sdk-linux ] && ANDROID_HOME=/opt/android-sdk-linux
+        [ -d ~/Android/Sdk ] && ANDROID_HOME=~/Android/Sdk
+    fi
+    if [ -z "$ANDROID_HOME" ]; then
+        echo "Couldn't locate Android SDK (currently required to build microg)." >&2
+        echo "Please set ANDROID_HOME." >&2
+        return 1
+    fi
+    if [ -z "$ANDROID_NDK_HOME" ]; then
+        [ -d /opt/android-ndk ] && ANDROID_NDK_HOME=/opt/android-ndk
+        [ -d "$ANDROID_HOME"/ndk-bundle ] && ANDROID_NDK_HOME="$ANDROID_HOME"/ndk-bundle
+    fi
+    if [ -z "$ANDROID_NDK_HOME" ]; then
+        echo "Couldn't locate Android NDK (currently required to build microg)." >&2
+        echo "WARNING!!!:Please set ANDROID_NDK_HOME." >&2
+        return 1
+    fi
+}
+
 function set_stuff_for_environment()
 {
     settitle
     set_java_home
+    find_sdk_ndk
     setpaths
     set_sequence_number
 

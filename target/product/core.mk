@@ -65,7 +65,9 @@ PRODUCT_PACKAGES += \
     mpv \
     AntennaPod \
     forecastie \
-    signal
+    signal \
+    vlc \
+    mintube
 
 # The set of packages whose code can be loaded by the system server.
 PRODUCT_SYSTEM_SERVER_APPS += \

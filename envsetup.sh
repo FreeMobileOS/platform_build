@@ -294,7 +294,7 @@ function find_sdk_ndk()
     if [ -z "$ANDROID_HOME" ]; then
         echo "Couldn't locate Android SDK (currently required to build microg)." >&2
         echo "Please set ANDROID_HOME." >&2
-        exit 1
+        return 1
     fi
     if [ -z "$ANDROID_NDK_HOME" ]; then
         [ -d /opt/android-ndk ] && ANDROID_NDK_HOME=/opt/android-ndk
@@ -302,8 +302,8 @@ function find_sdk_ndk()
     fi
     if [ -z "$ANDROID_NDK_HOME" ]; then
         echo "Couldn't locate Android NDK (currently required to build microg)." >&2
-        echo "Please set ANDROID_NDK_HOME." >&2
-        exit 1
+        echo "WARNING!!!:Please set ANDROID_NDK_HOME." >&2
+        return 1
     fi
 }
 

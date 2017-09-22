@@ -1086,3 +1086,6 @@ include $(BUILD_SYSTEM)/soong_config.mk
 endif
 
 include $(BUILD_SYSTEM)/dumpvar.mk
+include $(TOPDIR)vendor/extras/core/dumpvar.mk
+include $(TOPDIR)vendor/extras/core/pathmap.mk
+include $(TOPDIR)vendor/extras/core/qcom_target.mk

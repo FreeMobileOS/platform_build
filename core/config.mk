@@ -1186,5 +1186,8 @@ include $(BUILD_SYSTEM)/dumpvar.mk
 # Include any vendor specific config.mk file
 -include vendor/*/build/core/config.mk
 include $(TOPDIR)vendor/extras/core/dumpvar.mk
+
+ifeq ($(BOARD_USES_QCOM_HARDWARE),true)
 include $(TOPDIR)vendor/extras/core/pathmap.mk
 include $(TOPDIR)vendor/extras/core/qcom_target.mk
+endif

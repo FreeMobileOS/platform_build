@@ -68,7 +68,8 @@ PRODUCT_PACKAGES += \
     vlc \
     mintube \
     PassAndroid \
-    wire
+    wire \
+    terminal
 
 # The set of packages whose code can be loaded by the system server.
 PRODUCT_SYSTEM_SERVER_APPS += \

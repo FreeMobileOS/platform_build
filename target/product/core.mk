@@ -41,7 +41,7 @@ PRODUCT_PACKAGES += \
     KeyChain \
     Keyguard \
     LatinIME \
-    Launcher3QuickStep \
+    Lawnchair \
     ManagedProvisioning \
     MtpDocumentsProvider \
     PacProcessor \

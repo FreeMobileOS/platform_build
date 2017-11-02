@@ -74,8 +74,6 @@ PRODUCT_PACKAGES += \
     silence \
     yalpstore \
     opencamera \
-    kisslauncher \
-    openlauncher \
     leafpic \
     fdroidclient
 

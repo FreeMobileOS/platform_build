@@ -60,7 +60,7 @@ PRODUCT_PACKAGES += \
     vr \
     MmsService \
     k9mail \
-    omim \
+    mapsme \
     chrome \
     mpv \
     AntennaPod \

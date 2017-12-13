@@ -42,6 +42,7 @@ PRODUCT_PACKAGES += \
     Keyguard \
     LatinIME \
     Lawnchair \
+    Lawnfeed \
     ManagedProvisioning \
     MtpDocumentsProvider \
     PicoTts \

@@ -74,7 +74,7 @@ PRODUCT_PACKAGES += \
     mintube \
     PassAndroid \
     wire \
-    terminal \
+    Terminal \
     silence \
     yalpstore \
     opencamera \

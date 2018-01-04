@@ -63,6 +63,7 @@ PRODUCT_PACKAGES += \
     VpnDialogs \
     vr \
     MmsService \
+    open-keychain \
     k9mail \
     mapsme \
     chrome \

@@ -242,3 +242,7 @@ com\.google\.vr\.platform.*
 # Packages used for Android in Chrome OS
 org\.chromium\.arc
 org\.chromium\.arc\..*
+
+# codeauora packages
+org\.codeaurora\.internal.*
+org\.codeaurora\.camera.*

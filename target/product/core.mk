@@ -63,7 +63,7 @@ PRODUCT_PACKAGES += \
     open-keychain \
     k9mail \
     mapsme \
-    chrome \
+    chromium \
     mpv \
     AntennaPod \
     forecastie \

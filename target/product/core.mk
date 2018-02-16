@@ -78,7 +78,6 @@ PRODUCT_PACKAGES += \
     opencamera \
     leafpic \
     fdroidclient \
-    FDroidPrivilegedExtension \
     apkmirror \
     kdeconnect-android
 

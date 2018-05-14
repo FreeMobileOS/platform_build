@@ -44,7 +44,9 @@ _vendor_owner_whitelist := \
         ti \
         trusted_logic \
         verizon \
-        widevine
+        widevine \
+        fmo \
+        aosp
 
 
 _restrictions := $(strip $(PRODUCTS.$(INTERNAL_PRODUCT).PRODUCT_RESTRICT_VENDOR_FILES))

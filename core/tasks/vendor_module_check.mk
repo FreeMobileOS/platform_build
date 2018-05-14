@@ -45,8 +45,9 @@ _vendor_owner_whitelist := \
         trusted_logic \
         verizon \
         waves \
-        widevine
-
+        widevine \
+        fmo \
+        aosp
 
 _restrictions := none
 

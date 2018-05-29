@@ -41,8 +41,6 @@ PRODUCT_PACKAGES += \
     KeyChain \
     Keyguard \
     LatinIME \
-    Lawnchair \
-    Lawnfeed \
     ManagedProvisioning \
     MtpDocumentsProvider \
     PicoTts \
@@ -60,26 +58,6 @@ PRODUCT_PACKAGES += \
     VpnDialogs \
     vr \
     MmsService \
-    open-keychain \
-    k9mail \
-    mapsme \
-    chromium \
-    mpv \
-    AntennaPod \
-    forecastie \
-    signal \
-    vlc \
-    mintube \
-    PassAndroid \
-    wire \
-    Terminal \
-    silence \
-    yalpstore \
-    opencamera \
-    leafpic \
-    fdroidclient \
-    apkmirror \
-    kdeconnect-android
 
 # The set of packages whose code can be loaded by the system server.
 PRODUCT_SYSTEM_SERVER_APPS += \

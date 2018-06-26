@@ -2335,13 +2335,15 @@ fi
        'recovery_device': recovery_device,
        'bonus_args': bonus_args}
 
-  # The install script location moved from /system/etc to /system/bin
-  # in the L release.
-  sh_location = "bin/install-recovery.sh"
-
-  logger.info("putting script in %s", sh_location)
-
-  output_sink(sh_location, sh.encode())
+  if os.getenv('USE_CUSTOM_RECOVERY') != "true":
+    # The install script location moved from /system/etc to /system/bin
+    # in the L release.
+    sh_location = "bin/install-recovery.sh"
+    logger.info("putting script in %s", sh_location)
+    logger.info("env variable custom recovery", os.getenv('USE_CUSTOM_RECOVERY'))
+    output_sink(sh_location, sh)
+  else:
+    logger.info("custom recovery, do not fallback to native recovery")
 
 
 class DynamicPartitionUpdate(object):

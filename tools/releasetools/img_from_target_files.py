@@ -18,7 +18,7 @@
 Given a target-files zipfile, produces an image zipfile suitable for
 use with 'fastboot update'.
 
-Usage:  img_from_target_files [flags] input_target_files output_image_zip
+Usage:  img_from_target_files [flags] input_target_files output_image_zip [optional - custom recovery dir path]
 
   -z  (--bootable_zip)
       Include only the bootable images (eg 'boot' and 'recovery') in
@@ -67,7 +67,7 @@ def main(argv):
 
   bootable_only = bootable_only[0]
 
-  if len(args) != 2:
+  if len(args) < 2:
     common.Usage(__doc__)
     sys.exit(1)
 
@@ -80,6 +80,8 @@ def main(argv):
     # A target-files zip must contain the images since Lollipop.
     assert os.path.exists(images_path)
     for image in sorted(os.listdir(images_path)):
+      if len(args) == 3 and image == "recovery.img":
+        continue
       if bootable_only and image not in ("boot.img", "recovery.img"):
         continue
       if not image.endswith(".img"):
@@ -89,7 +91,11 @@ def main(argv):
       common.ZipWrite(output_zip, os.path.join(images_path, image), image)
 
   finally:
+    print("adding custom recovery.img...")
+    images_path = args[2]
+    image = "recovery.img"
     print("cleaning up...")
+    common.ZipWrite(output_zip, os.path.join(images_path, image), image)
     common.ZipClose(output_zip)
     shutil.rmtree(OPTIONS.input_tmp)
 

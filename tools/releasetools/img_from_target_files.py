@@ -18,7 +18,7 @@
 Given a target-files zipfile, produces an image zipfile suitable for
 use with 'fastboot update'.
 
-Usage:  img_from_target_files [flags] input_target_files output_image_zip
+Usage:  img_from_target_files [flags] input_target_files output_image_zip [optional - custom recovery dir path]
 
   -z  (--bootable_zip)
       Include only the bootable images (eg 'boot' and 'recovery') in
@@ -73,7 +73,7 @@ def CopyInfo(input_tmp, output_zip):
       "android-info.txt")
 
 
-def CopyUserImages(input_tmp, output_zip):
+def CopyUserImages(input_tmp, output_zip, custom_recovery = None):
   """
   Copy user images from the unzipped input and write to output_zip.
 
@@ -91,6 +91,8 @@ def CopyUserImages(input_tmp, output_zip):
   # A target-files zip must contain the images since Lollipop.
   assert os.path.exists(images_path)
   for image in sorted(os.listdir(images_path)):
+    if custom_recovery and image == "recovery.img":
+      continue
     if OPTIONS.bootable_only and image not in ("boot.img", "recovery.img"):
       continue
     if not image.endswith(".img"):
@@ -104,6 +106,11 @@ def CopyUserImages(input_tmp, output_zip):
         continue
     logger.info("writing %s to archive...", os.path.join("IMAGES", image))
     common.ZipWrite(output_zip, os.path.join(images_path, image), image)
+    if custom_recovery:
+      logger.info("Adding custom recovery.img...")
+      images_path = args[2]
+      image = "recovery.img"
+      common.ZipWrite(output_zip, os.path.join(images_path, image), image)
 
 
 def WriteSuperImages(input_tmp, output_zip):
@@ -160,7 +167,7 @@ def main(argv):
 
   OPTIONS.bootable_only = bootable_only_array[0]
 
-  if len(args) != 2:
+  if len(args) < 2:
     common.Usage(__doc__)
     sys.exit(1)
 
@@ -176,7 +183,10 @@ def main(argv):
 
   try:
     CopyInfo(OPTIONS.input_tmp, output_zip)
-    CopyUserImages(OPTIONS.input_tmp, output_zip)
+    if args == 3:
+      CopyUserImages(OPTIONS.input_tmp, output_zip, args[2])
+    else:
+      CopyUserImages(OPTIONS.input_tmp, output_zip)
     WriteSuperImages(OPTIONS.input_tmp, output_zip)
   finally:
     logger.info("cleaning up...")

@@ -1917,8 +1917,10 @@ fi
 
   # The install script location moved from /system/etc to /system/bin
   # in the L release.
-  sh_location = "bin/install-recovery.sh"
-
-  print("putting script in", sh_location)
-
-  output_sink(sh_location, sh)
+  if os.getenv('USE_CUSTOM_RECOVERY') != "true":
+    sh_location = "bin/install-recovery.sh"
+    print("putting script in", sh_location)
+    print("env variable custom recovery", os.getenv('USE_CUSTOM_RECOVERY'))
+    output_sink(sh_location, sh)
+  else:
+    print("custom recovery, do not fallback to native recovery")

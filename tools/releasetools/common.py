@@ -1899,7 +1899,8 @@ fi
        'sha1': recovery_img.sha1,
        'size': recovery_img.size}
   else:
-    sh = """#!/system/bin/sh
+    if os.getenv('USE_CUSTOM_RECOVERY') != "true":
+       sh = """#!/system/bin/sh
 if ! applypatch -c %(recovery_type)s:%(recovery_device)s:%(recovery_size)d:%(recovery_sha1)s; then
   applypatch %(bonus_args)s %(boot_type)s:%(boot_device)s:%(boot_size)d:%(boot_sha1)s %(recovery_type)s:%(recovery_device)s %(recovery_sha1)s %(recovery_size)d %(boot_sha1)s:/system/recovery-from-boot.p && log -t recovery "Installing new recovery image: succeeded" || log -t recovery "Installing new recovery image: failed"
 else
@@ -1914,13 +1915,14 @@ fi
        'recovery_type': recovery_type,
        'recovery_device': recovery_device,
        'bonus_args': bonus_args}
+    else:
+      sh = """#!/system/bin/sh
+log -t recovery "Recovery image already installed"
+"""
+      print("custom recovery, do not fallback to native recovery")
 
   # The install script location moved from /system/etc to /system/bin
   # in the L release.
-  if os.getenv('USE_CUSTOM_RECOVERY') != "true":
-    sh_location = "bin/install-recovery.sh"
-    print("putting script in", sh_location)
-    print("env variable custom recovery", os.getenv('USE_CUSTOM_RECOVERY'))
-    output_sink(sh_location, sh)
-  else:
-    print("custom recovery, do not fallback to native recovery")
+  sh_location = "bin/install-recovery.sh"
+  print("putting script in", sh_location)
+  output_sink(sh_location, sh)

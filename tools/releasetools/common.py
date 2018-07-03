@@ -2314,7 +2314,8 @@ fi
        'sha1': recovery_img.sha1,
        'size': recovery_img.size}
   else:
-    sh = """#!/system/bin/sh
+    if os.getenv('USE_CUSTOM_RECOVERY') != "true":
+      sh = """#!/system/bin/sh
 if ! applypatch --check %(recovery_type)s:%(recovery_device)s:%(recovery_size)d:%(recovery_sha1)s; then
   applypatch %(bonus_args)s \\
           --patch /system/recovery-from-boot.p \\
@@ -2334,16 +2335,18 @@ fi
        'recovery_type': recovery_type,
        'recovery_device': recovery_device,
        'bonus_args': bonus_args}
+    else:
+      sh = """#!/system/bin/sh
+log -t recovery "Recovery image already installed"
+"""
+      print("custom recovery, do not fallback to native recovery")
 
-  if os.getenv('USE_CUSTOM_RECOVERY') != "true":
-    # The install script location moved from /system/etc to /system/bin
-    # in the L release.
-    sh_location = "bin/install-recovery.sh"
-    logger.info("putting script in %s", sh_location)
-    logger.info("env variable custom recovery", os.getenv('USE_CUSTOM_RECOVERY'))
-    output_sink(sh_location, sh)
-  else:
-    logger.info("custom recovery, do not fallback to native recovery")
+  # The install script location moved from /system/etc to /system/bin
+  # in the L release.
+  sh_location = "bin/install-recovery.sh"
+  logger.info("putting script in %s", sh_location)
+  logger.info("env variable custom recovery", os.getenv('USE_CUSTOM_RECOVERY'))
+  output_sink(sh_location, sh)
 
 
 class DynamicPartitionUpdate(object):

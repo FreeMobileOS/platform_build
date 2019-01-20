@@ -934,8 +934,6 @@ def GetPackageMetadata(target_info, source_info=None):
 
   metadata = {
       'post-build' : target_info.fingerprint,
-      'post-build-incremental' : target_info.GetBuildProp(
-          'ro.build.version.incremental'),
       'post-sdk-level' : target_info.GetBuildProp(
           'ro.build.version.sdk'),
       'post-security-patch-level' : target_info.GetBuildProp(

@@ -109,12 +109,6 @@ function get_abs_build_var()
 # Get the exact value of a build variable.
 function get_build_var()
 {
-    if [ "$BUILD_VAR_CACHE_READY" = "true" ]
-    then
-        eval "echo \"\${var_cache_$1}\""
-    return
-    fi
-
     local T=$(gettop)
     if [ ! "$T" ]; then
         echo "Couldn't locate the top of the tree.  Try setting TOP." >&2

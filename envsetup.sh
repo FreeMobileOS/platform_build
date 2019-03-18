@@ -130,6 +130,7 @@ function check_product()
         TARGET_BUILD_TYPE= \
         TARGET_BUILD_APPS= \
         get_build_var TARGET_DEVICE > /dev/null
+        echo $?
     # hide successful answers, but allow the errors to show
 }
 
@@ -640,8 +641,37 @@ function lunch()
     TARGET_BUILD_VARIANT=$variant \
     TARGET_PLATFORM_VERSION=$version \
     build_build_var_cache
+    local ret=$(check_product $product)
+    if [ "$ret" -ne 0 ]
+    then
+		# if we can't find the product, try to grab it from our github
+        echo "Looks like first sync of source, let's grab product from our github"
+        echo "Ok to ignore first error..!!"
+        T=$(gettop)
+        pushd $T > /dev/null
+        if [[ $NO_ROOMSERVICE == true ]]; then
+            echo "Roomservice turned off, type in 'export NO_ROOMSERVICE=false' if you want it back on"
+        else
+            vendor/fmo/build/tools/roomservice.py $product
+        fi
+        popd > /dev/null
+        check_product $product
+    fi
+    TARGET_PRODUCT=$product \
+    TARGET_BUILD_VARIANT=$variant \
+    TARGET_PLATFORM_VERSION=$version \
+    build_build_var_cache
     if [ $? -ne 0 ]
     then
+        echo
+        echo "** Don't have a product spec for: '$product'"
+        echo "** Do you have the right repo manifest?"
+        product=
+    fi
+
+    if [ -z "$product" -o -z "$variant" ]
+    then
+        echo
         return 1
     fi
 
@@ -672,7 +702,8 @@ function _lunch()
     COMPREPLY=( $(compgen -W "${LUNCH_MENU_CHOICES[*]}" -- ${cur}) )
     return 0
 }
-complete -F _lunch lunch
+complete -F _lunch lunch 2>/dev/null
+#complete -F _lunch lunch
 
 # Configures the build to build unbundled apps.
 # Run tapas with one or more app names (from LOCAL_PACKAGE_NAME)

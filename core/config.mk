@@ -1168,6 +1168,9 @@ dont_bother_goals := out \
     vbmetaimage-nodeps \
     product-graph dump-products
 
+
+include vendor/fmo/config/BoardConfigStatix.mk
+
 ifneq ($(STATIX_BUILD),)
 include vendor/statix/config/BoardConfigStatix.mk
 endif

@@ -1171,10 +1171,6 @@ dont_bother_goals := out \
 
 include vendor/fmo/config/BoardConfigFmo.mk
 
-ifneq ($(STATIX_BUILD),)
-include vendor/statix/config/BoardConfigStatix.mk
-endif
-
 ifeq ($(CALLED_FROM_SETUP),true)
 include $(BUILD_SYSTEM)/ninja_config.mk
 include $(BUILD_SYSTEM)/soong_config.mk
